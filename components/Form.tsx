@@ -22,38 +22,84 @@ export const Form: FC = () => {
     }
 
     const handleTransactionSubmit = async (movie: Movie) => {
-        if (!publicKey) {
-            alert('Please connect your wallet!')
-            return
+        // if (!publicKey) {
+        //     alert('Please connect your wallet!')
+        //     return
+        // }
+
+        // const buffer = movie.serialize()
+        // const transaction = new web3.Transaction()
+
+        // const [pda] = await web3.PublicKey.findProgramAddress(
+        //     [publicKey.toBuffer(), Buffer.from(movie.title)],// new TextEncoder().encode(movie.title)],
+        //     new web3.PublicKey(MOVIE_REVIEW_PROGRAM_ID)
+        // )
+
+        // const instruction = new web3.TransactionInstruction({
+        //     keys: [
+        //         {
+        //             pubkey: publicKey,
+        //             isSigner: true,
+        //             isWritable: false,
+        //         },
+        //         {
+        //             pubkey: pda,
+        //             isSigner: false,
+        //             isWritable: true
+        //         },
+        //         {
+        //             pubkey: web3.SystemProgram.programId,
+        //             isSigner: false,
+        //             isWritable: false
+        //         }
+        //     ],
+        //     data: buffer,
+        //     programId: new web3.PublicKey(MOVIE_REVIEW_PROGRAM_ID)
+        // })
+
+        // transaction.add(instruction)
+
+        // try {
+        //     let txid = await sendTransaction(transaction, connection)
+        //     alert(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
+        //     console.log(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
+        // } catch (e) {
+        //     console.log(JSON.stringify(e))
+        //     alert(JSON.stringify(e))
+        // }
+
+        if(!publicKey){
+            alert('Please Connect Wallet');
+            return;
         }
 
-        const buffer = movie.serialize()
-        const transaction = new web3.Transaction()
+        const buffer=movie.serialize()
+        const transaction = new web3.Transaction
 
         const [pda] = await web3.PublicKey.findProgramAddress(
-            [publicKey.toBuffer(), Buffer.from(movie.title)],// new TextEncoder().encode(movie.title)],
+            [publicKey.toBuffer(), Buffer.from(movie.title)],
             new web3.PublicKey(MOVIE_REVIEW_PROGRAM_ID)
         )
 
-        const instruction = new web3.TransactionInstruction({
-            keys: [
+        const instruction=new web3.TransactionInstruction({
+            keys:[
                 {
-                    pubkey: publicKey,
-                    isSigner: true,
-                    isWritable: false,
+                    pubkey:publicKey,
+                    isSigner:true,
+                    isWritable:false,
                 },
                 {
-                    pubkey: pda,
-                    isSigner: false,
-                    isWritable: true
+                    pubkey:pda,
+                    isSigner:false,
+                    isWritable:true
                 },
                 {
-                    pubkey: web3.SystemProgram.programId,
-                    isSigner: false,
-                    isWritable: false
+                    pubkey:web3.SystemProgram.programId,
+                    isSigner:false,
+                    isWritable:false,
                 }
             ],
-            data: buffer,
+            data : buffer,
             programId: new web3.PublicKey(MOVIE_REVIEW_PROGRAM_ID)
         })
 
@@ -61,12 +107,10 @@ export const Form: FC = () => {
 
         try {
             let txid = await sendTransaction(transaction, connection)
-            alert(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
             console.log(`Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`)
-        } catch (e) {
-            console.log(JSON.stringify(e))
+          } catch (e) {
             alert(JSON.stringify(e))
-        }
+          }
     }
 
     return (
